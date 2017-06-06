@@ -1,0 +1,146 @@
+swagger: '2.0'
+info:
+  title: Shop WS
+  description: A web services that manages the e-commerce
+  version: "1.0.0"
+host: myserver.it
+schemes:
+  - https
+basePath: /
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /:
+    get:
+      summary: home page
+      description: it returns the home page of the e-commerce service
+      responses:
+        200:
+          description: welcome page
+
+            
+  /showWarehouse:
+    get:
+      summary: show items stored in the warehouse of the e-commerce
+      description: it returns the complete list of items stored in warehouse
+      responses:
+        200:
+          description: web page with the list of items
+          
+  /sellItem:
+    post:
+      summary: sell an item
+      consumes:
+        - application/x-www-form-urlencoded
+      description: it returns the item sold, reduce the quantity in warehouse by 1
+      parameters:
+        - name: ID
+          in: formData
+          description: ID of the item
+          required: true
+          type: string
+      responses:
+        200:
+          description: object of the sold item
+          schema: 
+              $ref: "#/definitions/item"
+        406:
+          description: ID of error
+          schema: 
+            properties:
+              error:
+                type: integer
+        404:
+          description: no items found with specified criteria
+
+  /restockItem:
+    post:
+      summary: restock an item
+      consumes:
+        - application/x-www-form-urlencoded
+      description: it returns the description of the item restocked
+      parameters:
+        - name: ID
+          in: formData
+          description: ID of the item
+          required: true
+          type: integer
+        - name: quantity
+          in: formData
+          description: quantity of the item stored
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ack insertion
+          schema: 
+              $ref: "#/definitions/item"
+        406:
+          description: ID of error, parameters are not correct 
+          schema: 
+            properties:
+              error:
+                type: integer
+        400:
+          description: Item not inserted
+            
+  /sendItem:
+    post:
+      summary: send the item to a given place and returns the price, based on the distance
+      description: the servive calculatete the distance and returns the price of the shipping 
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: ID
+          in: formData
+          description: ID of element to send
+          required: true
+          type: integer
+        - name: placeH
+          in: formData
+          description: coordinate H of desctination
+          required: true
+          type: integer
+        - name: placeW
+          in: formData
+          description: coordinate W of destination
+          required: true
+          type: integer
+      responses:
+        200:
+          description: the price to ship the item
+          schema: 
+            type: integer
+        406:
+          description: ID of error, parameters are not correct 
+          schema: 
+            properties:
+              error:
+                type: integer
+        400:
+          description: Item not sent
+          
+definitions:
+  item:
+    properties:
+      ID:
+        type: string
+        description: ID of the item
+      price:
+        type: integer
+        description: price of the item
+      quantity:
+        type: integer
+        description: price of the item in the warehouse
+      boxSize:
+        type: integer
+        description: size of the box of the item
+      place:
+        type: array
+        items:
+          type: string
+        description: place where the item is stored
+
+        
