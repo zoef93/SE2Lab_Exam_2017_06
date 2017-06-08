@@ -123,9 +123,35 @@ var restockItem = function restockItem(item)
         return null;
 }
 
+//my code
+var sendItem = function sendItem(itemID, placeH, placeW){
+    var position = searchPos(itemID);
+    
+    if(position != null){
+        var shippingPrice;
+        var fromH = warehouse[position].place[0];
+        var fromW = warehouse[position].place[1];
+        var distance = (fromH-placeH)+(fromW-placeW);
+        
+        if(distance <= 6){
+            shippingPrice = "economic";
+        }else{
+            if(distance > 12){
+                shippingPrice = "expensive";
+            }else{
+                shippingPrice = "standard";
+            }
+        }
+        return shippingPrice;
+    }else{
+        return null;
+    }
+}
+
 
 //export functions
 exports.getWarehouse = getWarehouse; 
 exports.searchItem = searchItem; 
 exports.sellItem = sellItem; 
-exports.restockItem = restockItem; 
+exports.restockItem = restockItem;
+exports.sendItem = sendItem;

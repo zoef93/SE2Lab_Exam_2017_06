@@ -1,0 +1,25 @@
+{
+  "name": "esame",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoef93/SE2Lab_Exam_2017_06.git"
+  },
+  "author": "zoe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zoef93/SE2Lab_Exam_2017_06/issues"
+  },
+  "homepage": "https://github.com/zoef93/SE2Lab_Exam_2017_06#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.3",
+    "express": "^4.15.3"
+  }
+}

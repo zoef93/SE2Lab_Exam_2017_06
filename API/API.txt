@@ -28,7 +28,33 @@ paths:
       responses:
         200:
           description: web page with the list of items
-          
+
+  /search:
+    post:
+      summary: search an item
+      consumes:
+        - application/x-www-form-urlencoded
+      description: it returns the item sold, reduce the quantity in warehouse by 1
+      parameters:
+        - name: ID
+          in: formData
+          description: ID of the item
+          required: true
+          type: string
+      responses:
+        200:
+          description: object of the sold item
+          schema: 
+              $ref: "#/definitions/item"
+        406:
+          description: ID of error
+          schema: 
+            properties:
+              error:
+                type: integer
+        404:
+          description: no items found with specified criteria
+
   /sellItem:
     post:
       summary: sell an item
@@ -112,7 +138,7 @@ paths:
         200:
           description: the price to ship the item
           schema: 
-            type: integer
+            type: string
         406:
           description: ID of error, parameters are not correct 
           schema: 
